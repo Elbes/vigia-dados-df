@@ -1,0 +1,26 @@
+services:
+  vigia-ml:
+    build: ./ml-service
+    container_name: vigia-ml
+    volumes:
+      - ./data:/app/data
+      #- ./ml-service/artifacts:/app/artifacts
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - vigia-net
+
+  vigia-api:
+    build: ./api-laravel
+    container_name: vigia-api
+    ports:
+      - "8001:80"
+    depends_on:
+      - vigia-ml
+    networks:
+      - vigia-net
+
+networks:
+  vigia-net:
+    driver: bridge
