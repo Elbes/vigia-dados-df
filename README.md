@@ -8,7 +8,7 @@ A solução atua como um **mecanismo preventivo**, auxiliando a triagem inicial 
 
 ---
 
-## 🧩 Problema
+## Problema
 
 Órgãos públicos recebem diariamente um grande volume de pedidos de acesso à informação.  
 A análise exclusivamente manual desses pedidos pode resultar em:
@@ -20,7 +20,7 @@ A análise exclusivamente manual desses pedidos pode resultar em:
 
 ---
 
-## 🎯 Objetivo da Solução
+## Objetivo da Solução
 
 Atuar como um **filtro automatizado de apoio à decisão**, alertando servidores públicos quando um pedido contém indícios de dados protegidos pela LGPD.
 
@@ -34,7 +34,7 @@ O VigiaDados DF busca:
 
 ---
 
-## 🧠 Visão Geral da Solução
+## Visão Geral da Solução
 
 A solução adota uma **arquitetura determinística e linguística**, com separação clara de responsabilidades:
 
@@ -46,7 +46,7 @@ Essa abordagem é especialmente adequada ao contexto do edital, pois **evita dec
 
 ---
 
-## 🏗️ Abordagem Técnica
+## bordagem Técnica
 
 ### Camada 1 — Regras Determinísticas (Regex)
 
@@ -91,12 +91,12 @@ São utilizados:
 - Regex integrada ao pipeline spaCy;
 - Validações adicionais para redução de falsos positivos.
 
-⚠️ **Não há treinamento automático de modelos**.  
+**Não há treinamento automático de modelos**.  
 O pipeline é **determinístico, reproduzível e auditável**.
 
 ---
 
-## 🤖 Uso de Inteligência Artificial
+## Uso de Inteligência Artificial
 
 A Inteligência Artificial é utilizada de forma:
 
@@ -115,7 +115,7 @@ A solução está alinhada às **boas práticas de IA Responsável no setor púb
 
 ---
 
-## 📊 Evidências e Explicabilidade
+## Evidências e Explicabilidade
 
 Cada análise retorna, além da decisão final:
 
@@ -129,11 +129,11 @@ Esses elementos permitem **auditoria técnica, jurídica e administrativa**.
 
 ---
 
-## 🏛️ Arquitetura da Aplicação
+## Arquitetura da Aplicação
 
 Arquitetura distribuída com separação clara de responsabilidades:
 
-### 🔹 Python / FastAPI (ML Service)
+### Python / FastAPI (ML Service)
 Responsável por:
 
 - Análise textual;
@@ -141,7 +141,7 @@ Responsável por:
 - Execução do pipeline linguístico (Regex + spaCy);
 - Exposição de API.
 
-### 🔹 PHP / Laravel (API Institucional)
+### PHP / Laravel (API Institucional)
 Responsável por:
 
 - Orquestração da requisição;
@@ -161,7 +161,7 @@ Com Laravel:
 
 ---
 
-## 🧰 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - Python 3.10
 - FastAPI
@@ -173,7 +173,7 @@ Com Laravel:
 
 ---
 
-## 🚀 Execução com Docker (Recomendado)
+## Execução com Docker (Recomendado)
 
 ### Pré-requisitos
 - Docker
