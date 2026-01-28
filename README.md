@@ -243,6 +243,7 @@ vigia-dados-df/
 ```
 
 ## Diagrama de Decisão (Lógico)
+```
 Texto do Pedido (e-SIC)
         │
         ▼
@@ -311,9 +312,10 @@ Texto do Pedido (e-SIC)
 │ - Revisão humana            │
 │ - Publicação automática     │
 └─────────────────────────────┘
+```
 
 ## Diagrama Arquitetural (Serviços)
-
+```
 ┌───────────────────────────────┐
 │        Usuário / Sistema      │
 │    (e-SIC / Portal / API)     │
@@ -350,7 +352,7 @@ Texto do Pedido (e-SIC)
 │  → Saída estruturada JSON     │
 │    (decisão + evidências)     │
 └───────────────────────────────┘
-
+```
 
 ## Considerações Finais
 O VigiaDados DF foi projetado para:
