@@ -40,19 +40,21 @@ class AnaliseController extends Controller
             : 'Publicação automática';
 
             return response()->json([
-                'trace_id'              => $ml['trace_id'] ?? null,
-                'contem_dados_pessoais' => $ml['contem_dados_pessoais'],
-                'contem_dados_sensiveis'=> $ml['contem_dados_sensiveis'] ?? false,
-                'origem_decisao'        => $ml['origem_decisao'] ?? [],
-                'tipos_detectados'      => $ml['tipos_detectados'] ?? [],
-                'categorias_sensiveis'  => $ml['categorias_sensiveis'] ?? [],
-                'confianca'             => $ml['confianca'] ?? 0,
-                'acao_sugerida'         => $acao
+                'trace_id'               => $ml['trace_id'] ?? null,
+                'contem_dados_pessoais'  => $ml['contem_dados_pessoais'],
+                'contem_dados_sensiveis' => $ml['contem_dados_sensiveis'] ?? false,
+                'origem_decisao'         => $ml['origem_decisao'] ?? [],
+                'tipos_detectados'       => $ml['tipos_detectados'] ?? [],
+                'categorias_sensiveis'   => $ml['categorias_sensiveis'] ?? [],
+                'confianca'              => $ml['confianca'] ?? 0,
+                //(AUDITORIA / EXPLICABILIDADE)
+                'evidencias'             => $ml['evidencias'] ?? [],
+                'acao_sugerida'          => $acao
             ]);
 
         } catch (\Throwable $e) {
 
-            // 🔒 Fallback seguro (LGPD – princípio da prevenção)
+            //Fallback seguro (LGPD – princípio da prevenção)
             return response()->json([
                 'trace_id'      => \Str::uuid(),
                 'status'        => 'erro',

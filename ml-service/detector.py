@@ -16,52 +16,48 @@ def analisar_texto(texto: str) -> dict:
     nlp = carregar_spacy()
     matcher = obter_matcher()
 
-    tipos_detectados = set()
-    categorias_sensiveis = set()
+    tipos = set()
+    sensiveis = set()
     origens = set()
-    confianca = 0.0
     evidencias = []
+    confianca = 0.0
 
     doc = nlp(texto)
 
     for ent in doc.ents:
         texto_ent = normalizar(ent.text)
 
-        # 🔹 Nome de pessoa (com exceções)
         if ent.label_ == "PER":
             if texto_ent not in LOCAIS_IGNORADOS and texto_ent not in ORGAOS_IGNORADOS:
-                tipos_detectados.add("nome_pessoa")
+                tipos.add("nome_pessoa")
                 origens.add("spacy")
                 confianca = max(confianca, 0.75)
                 evidencias.append(f"Nome detectado: {ent.text}")
 
-        # 🔹 Dados pessoais fortes
-        if ent.label_ in ["CPF_CNPJ", "EMAIL", "TELEFONE"]:
-            tipos_detectados.add(ent.label_.lower())
-            origens.add("regex")
+        if ent.label_ in ["CPF", "CNPJ", "EMAIL", "TELEFONE"]:
+            tipos.add(ent.label_.lower())
+            origens.add("regex_validado")
             confianca = max(confianca, 0.95)
-            evidencias.append(f"Dado pessoal: {ent.label_}")
+            evidencias.append(f"Dado pessoal validado: {ent.label_}")
 
-        # 🔹 Dados sensíveis explícitos
         if ent.label_ in MAPA_SENSIVEL:
-            categorias_sensiveis.add(MAPA_SENSIVEL[ent.label_])
+            sensiveis.add(MAPA_SENSIVEL[ent.label_])
             origens.add("spacy+heuristica")
             confianca = max(confianca, 0.85)
             evidencias.append(f"Dado sensível: {ent.text}")
 
-    # 🔹 Contexto sensível implícito
     if matcher(doc):
-        categorias_sensiveis.add("saude")
-        origens.add("spacy+contexto")
+        sensiveis.add("saude")
+        origens.add("contexto")
         confianca = max(confianca, 0.9)
-        evidencias.append("Contexto sensível detectado")
+        evidencias.append("Contexto sensível declarado")
 
     return {
-        "contem_dados_pessoais": bool(tipos_detectados),
-        "contem_dados_sensiveis": bool(categorias_sensiveis),
+        "contem_dados_pessoais": bool(tipos),
+        "contem_dados_sensiveis": bool(sensiveis),
         "origem_decisao": sorted(origens),
-        "tipos_detectados": sorted(tipos_detectados),
-        "categorias_sensiveis": sorted(categorias_sensiveis),
+        "tipos_detectados": sorted(tipos),
+        "categorias_sensiveis": sorted(sensiveis),
         "confianca": round(confianca, 2),
         "evidencias": evidencias
     }

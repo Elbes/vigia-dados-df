@@ -1,182 +1,188 @@
-poderia montar em markdown
 # VigiaDados DF
 
-Projeto desenvolvido para o 1º Hackathon em Controle Social – Desafio Participa DF,na categoria Acesso à Informação.
-O VigiaDados DF tem como objetivo apoiar a Administração Pública na proteção de dados pessoais e dados sensíveis, identificando automaticamente pedidos de acesso à informação que apresentem risco de exposição, evitando sua divulgação indevida, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018).
+Projeto desenvolvido para o **1º Hackathon em Controle Social – Desafio Participa DF**, na categoria **Acesso à Informação**.
 
-## Problema
+O **VigiaDados DF** tem como objetivo apoiar a Administração Pública na **proteção de dados pessoais e dados sensíveis**, identificando automaticamente pedidos de acesso à informação que apresentem **risco de exposição indevida**, em conformidade com a **Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018)**.
 
-Órgãos públicos recebem diariamente um grande volume de pedidos de acesso à informação.\
-A análise manual desses pedidos pode resultar em:
+A solução atua como um **mecanismo preventivo**, auxiliando a triagem inicial de pedidos, **sem substituir a decisão humana**, garantindo **explicabilidade, auditabilidade e governança**.
 
-* Exposição indevida de dados pessoais ou sensíveis;
+---
 
-* Classificação equivocada de pedidos como públicos;
+## 🧩 Problema
 
-* Risco jurídico e administrativo;
+Órgãos públicos recebem diariamente um grande volume de pedidos de acesso à informação.  
+A análise exclusivamente manual desses pedidos pode resultar em:
 
-* Sobrecarga operacional dos servidores responsáveis pela triagem.
+- Exposição indevida de dados pessoais ou sensíveis;
+- Classificação equivocada de informações como públicas;
+- Risco jurídico, administrativo e institucional;
+- Sobrecarga operacional das equipes responsáveis pela triagem.
 
-## Objetivo da Solução
-Atuar como um filtro preventivo automatizado, auxiliando servidores públicos na triagem inicial de pedidos de acesso à informação, sem substituir a decisão humana.
+---
+
+## 🎯 Objetivo da Solução
+
+Atuar como um **filtro automatizado de apoio à decisão**, alertando servidores públicos quando um pedido contém indícios de dados protegidos pela LGPD.
+
 O VigiaDados DF busca:
 
-* Identificar automaticamente dados pessoais explícitos;
+- Identificar automaticamente **dados pessoais explícitos**;
+- Detectar **dados sensíveis**, conforme definido pela LGPD;
+- Sinalizar pedidos que exigem **revisão humana obrigatória**;
+- Priorizar **alta sensibilidade (recall)**, reduzindo falsos negativos;
+- Garantir **explicabilidade, transparência e rastreabilidade** das decisões.
 
-* Detectar dados sensíveis, conforme definido pela LGPD;
+---
 
-* Sinalizar pedidos que exigem revisão humana;
+## 🧠 Visão Geral da Solução
 
-* Priorizar alta sensibilidade (recall), reduzindo falsos negativos;
+A solução adota uma **arquitetura determinística e linguística**, com separação clara de responsabilidades:
 
-* Garantir explicabilidade, auditabilidade e governança.
+- **Regras explícitas (Regex)** → detecção direta, conservadora e auditável;
+- **Heurística linguística (spaCy / NLP clássico)** → interpretação contextual;
+- **Camada de orquestração (Laravel)** → integração, regras de negócio e governança.
 
-## Visão Geral da Solução
-A solução adota uma arquitetura determinística e linguística, com separação clara de responsabilidades:
+Essa abordagem é especialmente adequada ao contexto do edital, pois **evita decisões opacas**, não utiliza modelos generativos e permite **controle institucional total**.
 
-* Regras explícitas (Regex) → detecção direta e auditável
+---
 
-* Heurística linguística (spaCy / NER) → interpretação contextual
-
-* Camada de orquestração (Laravel) → integração e regras de negócio
-
-Essa abordagem é recomendada para o edital, pois evita decisões opacas e garante total controle institucional.
-Abordagem Técnica (Recomendada pelo Edital)
-A solução utiliza uma arquitetura sem treinamento de modelos, combinando:
+## 🏗️ Abordagem Técnica
 
 ### Camada 1 — Regras Determinísticas (Regex)
-Utiliza expressões regulares para identificar padrões explícitos de dados pessoais, como:
 
-* CPF;
+Utiliza expressões regulares extensivas para identificar padrões explícitos de dados pessoais e administrativos, como:
 
-* E-mail;
+- CPF e CNPJ (com validação de dígito verificador);
+- E-mails e telefones;
+- Documentos pessoais (RG, CNH, passaporte, títulos);
+- Matrículas, inscrições e identificadores administrativos;
+- Endereços;
+- Dados financeiros e bancários;
+- Processos e protocolos administrativos.
 
-* Telefone;
+**Características:**
 
-* Placas de veículos;
+- Decisão conservadora;
+- Alta sensibilidade (recall);
+- Totalmente explicável e auditável;
+- Fundamentada em regras jurídicas claras.
 
-* Matrículas e identificadores administrativos;
-
-* Endereços (Rua, Avenida, Quadra, Lote).
-
-Características dessa camada:
-
-* Decisão conservadora;
-
-* Alta sensibilidade (recall);
-
-* Totalmente explicável e auditável;
-
-* Baseada em regras jurídicas claras.
+---
 
 ### Camada 2 — Heurística Linguística com spaCy
-Utiliza Processamento de Linguagem Natural clássico (NLP), sem modelos generativos, para identificar:
-🔹 Dados pessoais
 
-* Nomes de pessoas (NER – PER);
+Utiliza **Processamento de Linguagem Natural clássico (NLP)**, sem aprendizado automático em produção, para identificar:
 
-* Menções indiretas a identificação pessoal.
+#### 🔹 Dados pessoais
+- Nomes de pessoas (NER – `PER`);
+- Menções indiretas a identificação pessoal.
 
-🔹 Dados sensíveis (LGPD – Art. 5º, II)
-
-* Saúde (ex: “sou portador de…”);
-
-* Religião;
-
-* Raça / etnia;
-
-* Orientação sexual (quando explicitamente mencionada).
+#### 🔹 Dados sensíveis (LGPD – Art. 5º, II)
+- Saúde (ex: “sou portador de…”);
+- Religião;
+- Raça / etnia;
+- Outros contextos sensíveis quando explicitamente declarados.
 
 São utilizados:
 
-* spaCy NER (modelo pré-treinado);
+- spaCy NER (`pt_core_news_lg`);
+- `EntityRuler` para padrões linguísticos controlados;
+- `Matcher` para detecção de contexto sensível;
+- Regex integrada ao pipeline spaCy;
+- Validações adicionais para redução de falsos positivos.
 
-* EntityRuler para padrões linguísticos controlados;
+⚠️ **Não há treinamento automático de modelos**.  
+O pipeline é **determinístico, reproduzível e auditável**.
 
-* Matcher para contexto sensível;
+---
 
-* Regex complementar integrada ao pipeline.
+## 🤖 Uso de Inteligência Artificial
 
-Não há treinamento automático de modelos. O pipeline é determinístico, reproduzível e auditável.
-
-## Uso de Inteligência Artificial
 A Inteligência Artificial é utilizada de forma:
 
-* Não generativa;
+- Não generativa;
+- Sem aprendizado automático em produção;
+- Totalmente explicável;
+- Com controle humano garantido.
 
-* Sem aprendizado automático em produção;
+**Não são utilizados:**
 
-* Totalmente explicável;
+- LLMs;
+- Modelos generativos;
+- Classificadores estatísticos opacos.
 
-* Com controle humano garantido.
+A solução está alinhada às **boas práticas de IA Responsável no setor público**.
 
-Não são utilizados:
+---
 
-* LLMs;
+## 📊 Evidências e Explicabilidade
 
-* Modelos generativos;
+Cada análise retorna, além da decisão final:
 
-* Classificadores estatísticos opacos.
+- **Tipos de dados detectados**;
+- **Origem da decisão** (regex, spaCy, matcher);
+- **Evidências textuais** (trechos detectados);
+- **Nível de confiança estimado**;
+- **Ação sugerida** (revisão ou publicação).
 
-A solução está alinhada às boas práticas de IA Responsável no setor público.
-Dados Utilizados
+Esses elementos permitem **auditoria técnica, jurídica e administrativa**.
 
-* Amostras anonimizadas e/ou sintéticas, conforme o edital;
+---
 
-* Nenhum dado pessoal real foi utilizado;
+## 🏛️ Arquitetura da Aplicação
 
-* A solução é compatível com bases reais sob governança institucional.
-
-## Arquitetura da Aplicação
 Arquitetura distribuída com separação clara de responsabilidades:
-🔹 Python / FastAPI
+
+### 🔹 Python / FastAPI (ML Service)
 Responsável por:
 
-* Análise textual;
+- Análise textual;
+- Detecção de dados pessoais e sensíveis;
+- Execução do pipeline linguístico (Regex + spaCy);
+- Exposição de API.
 
-* Detecção de dados pessoais e sensíveis;
-
-* Execução do pipeline linguístico (Regex + spaCy).
-
-🔹 PHP / Laravel
+### 🔹 PHP / Laravel (API Institucional)
 Responsável por:
 
-* Orquestração da API;
+- Orquestração da requisição;
+- Validação de entrada;
+- Tratamento de exceções;
+- Regras de negócio;
+- Definição da ação sugerida ao usuário.
 
-* Validação de requisições;
+Essa abordagem segue o princípio de **Separação de Responsabilidades (SoC)**, favorecendo manutenção, escalabilidade e integração futura com o ecossistema do Participa DF.
 
-* Regras de negócio;
+### Por que usar PHP com Laravel + Python
+Embora toda a solução pudesse ser implementada exclusivamente em Python, a escolha por uma arquitetura híbrida traz vantagens práticas no contexto governamental:
 
-* Definição da ação sugerida (revisão ou publicação).
+Com Laravel:
+- Python é utilizado onde é mais eficiente: análise textual e processamento semântico;
+- Laravel atua como camada de integração, segurança, governança e compatibilidade com sistemas existentes.
 
-Essa abordagem segue o princípio de Separação de Responsabilidades (SoC).
+---
 
-### Tecnologias Utilizadas
+## 🧰 Tecnologias Utilizadas
 
-* Python 3.10
+- Python 3.10
+- FastAPI
+- spaCy (`pt_core_news_lg`)
+- Docker
+- Docker Compose
+- PHP 8.2
+- Laravel 10
 
-* FastAPI
+---
 
-* spaCy (pt_core_news_lg)
+## 🚀 Execução com Docker (Recomendado)
 
-* Docker
+### Pré-requisitos
+- Docker
+- Docker Compose
 
-* Docker Compose
-
-* PHP 8.2
-
-* Laravel 10
-
-### Execução com Docker (Recomendado)
-Pré-requisitos
-
-* Docker
-
-* Docker Compose
-
-Subir a aplicação
-
+### Subir a aplicação
 ```
+git clone https://github.com/Elbes/vigia-dados-df.git
+cd vigia-dados-df
 docker compose build
 docker compose up
 ```
@@ -201,9 +207,14 @@ curl -X POST http://localhost:8001/api/analisar \
 ```
 {
   "contem_dados_pessoais": true,
-  "tipos_detectados": ["cpf", "nome_pessoa"],
-  "tem_dado_sensivel": false,
-  "origem_decisao": "regex",
+  "contem_dados_sensiveis": false,
+  "tipos_detectados": ["cpf_cnpj", "nome_pessoa"],
+  "origem_decisao": ["regex", "spacy"],
+  "confianca": 0.95,
+  "evidencias": [
+    "Nome detectado: João Silva",
+    "Dado pessoal: CPF_CNPJ"
+  ],
   "acao_sugerida": "Revisão antes da publicação"
 }
 ```
@@ -230,6 +241,116 @@ vigia-dados-df/
 └── data/                    # Base de dados
     └── AMOSTRA_e-SIC.xlsx   # Amostra fornecida
 ```
+
+## Diagrama de Decisão (Lógico)
+Texto do Pedido (e-SIC)
+        │
+        ▼
+┌─────────────────────────────┐
+│ Normalização do Texto       │
+│ (lowercase / limpeza básica)│
+└─────────────┬───────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│ Regex Determinístico        │
+│ (Dados explícitos)          │
+│ - CPF, RG, Email            │
+│ - Telefone, Endereço        │
+│ - Matrículas, Processos     │
+└─────────────┬───────────────┘
+              │
+              ├── Padrão válido detectado?
+              │        │
+              │        ├─ SIM
+              │        │     ▼
+              │        │ ┌──────────────────────┐
+              │        │ │ Validação Anti-Ruído  │
+              │        │ │ (contexto legal, ano, │
+              │        │ │ tamanho, whitelist)   │
+              │        │ └─────────┬────────────┘
+              │        │           │
+              │        │           ├─ Válido?
+              │        │           │     │
+              │        │           │     ├─ SIM → 
+              │        │           │     │
+              │        │           │     │  Dado Pessoal
+              │        │           │     │  (Decisão Final)
+              │        │           │     │
+              │        │           │     └─ NÃO → Ignorar
+              │        │
+              │        └─ NÃO
+              ▼
+┌─────────────────────────────┐
+│ Heurística Linguística      │
+│ spaCy (NER + Regras)        │
+│ - Nome de pessoa            │
+│ - Saúde, Religião, Raça     │
+└─────────────┬───────────────┘
+              │
+              ├── Entidade sensível detectada?
+              │        │
+              │        ├─ SIM → 
+              │        │
+              │        │  Dado Sensível
+              │        │  (Revisão Humana)
+              │        │
+              │        └─ NÃO
+              ▼
+┌─────────────────────────────┐
+│ Resultado Consolidado       │
+│ - Evidências                │
+│ - Tipos detectados          │
+│ - Origem da decisão         │
+└─────────────┬───────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│ Decisão Administrativa      │
+│ (Laravel – Regra de Negócio)│
+│ - Revisão humana            │
+│ - Publicação automática     │
+└─────────────────────────────┘
+
+## Diagrama Arquitetural (Serviços)
+
+┌───────────────────────────────┐
+│        Usuário / Sistema      │
+│    (e-SIC / Portal / API)     │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│      API Laravel (PHP)        │
+│                               │
+│ - Validação da requisição     │
+│ - Segurança / Logs            │
+│ - Regras de negócio           │
+│ - Decisão administrativa      │
+│ - Evidências para auditoria   │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│    ML Service (FastAPI)       │
+│                               │
+│  ┌─────────────────────────┐ │
+│  │ Regex Determinístico    │ │
+│  │ - Regras jurídicas      │ │
+│  │ - Auditável             │ │
+│  └─────────────────────────┘ │
+│                               │
+│  ┌─────────────────────────┐ │
+│  │ spaCy / NLP Clássico    │ │
+│  │ - NER                   │ │
+│  │ - EntityRuler           │ │
+│  │ - Matcher contextual    │ │
+│  └─────────────────────────┘ │
+│                               │
+│  → Saída estruturada JSON     │
+│    (decisão + evidências)     │
+└───────────────────────────────┘
+
 
 ## Considerações Finais
 O VigiaDados DF foi projetado para:

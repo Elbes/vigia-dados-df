@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'ml' => [
+        'url' => env('ML_SERVICE_URL'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
