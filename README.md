@@ -230,6 +230,7 @@ vigia-dados-df/
 │   ├── detector.py          # Decisão final e JSON - Lógica de análise
 │   ├── spacy_pipeline.py    # Regex + NER + heurísticas
 │   ├── evaluate.py          # Avaliação OFFLINE (auditoria)
+│   ├── validacoes.py        # funções de validações
 │   ├── requirements.txt     # API FastAPI (execução)
 │   └── Dockerfile           # CONFIG DOCKER
 ├── api-laravel/             # Interface/API em PHP
