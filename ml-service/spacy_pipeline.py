@@ -74,6 +74,49 @@ REGEX_PATTERNS = {
     "PIX_CPF": r'(?i)\bpix[\s\.:]*\d{3}\.\d{3}\.\d{3}-\d{2}\b',
 }
 
+# ==============================================================================
+# LISTAS DE EXCEÇÃO (O QUE IGNORAR)
+# ==============================================================================
+LOCAIS_IGNORADOS = {
+    "plano piloto", "gama", "taguatinga", "brazlândia", "brazlandia",
+    "sobradinho", "planaltina", "paranoá", "paranoa", "núcleo bandeirante",
+    "ceilândia", "ceilandia", "guará", "guara", "cruzeiro", "samambaia", 
+    "santa maria", "são sebastião", "recanto das emas", "lago sul", "lago norte",
+    "riacho fundo", "candangolândia", "águas claras", "aguas claras", "sudoeste", 
+    "octogonal", "varjão", "park way", "scia", "estrutural", "jardim botânico", 
+    "itapoã", "sia", "vicente pires", "fercal", "sol nascente", "arniqueira", 
+    "asa sul", "asa norte", "setor", "sqs", "sqn", "shis", "shin", "distrito federal", 
+    "brasília", "brasilia", "df", "norte", "sul", "leste", "oeste"
+}
+
+ORGAOS_IGNORADOS = {
+    "gdf", "cldf", "tcdf", "pcdf", "pmdf", "cbmdf", "detran", "detran-df", "der",
+    "caesb", "neoenergia", "ceb", "novacap", "terracap", "codhab", "brb", "procon",
+    "ses", "ses-df", "see", "see-df", "sef", "sefaz", "ssp", "ssp-df", "sedest",
+    "agefis", "df legal", "slu", "adasa", "emater", "zoo", "metro", "metrô",
+    "cgdf", "controladoria geral", "ouvidoria", "participa df", "participa-df",
+    "tjdft", "mpdft", "stf", "stj", "tst", "tse", "mpu", "agu", "cgu", "tcu",
+    "inss", "receita federal", "polícia federal", "policia federal","seec",
+    "secretaria", "ministério", "ministerio", "diretoria", "gerência", "gerencia",
+    "coordenação", "presidência", "agência", "instituto", "fundação", "departamento",
+    "defensoria pública", "ministério público", "conselho tutelar"
+}
+
+# ==============================================================================
+# LISTAS DE ALVOS (O QUE PROCURAR)
+# ==============================================================================
+
+# [As listas DOENCAS, RACA_ETNIA, RELIGIOES, ORIENTACAO_SEXUAL permanecem iguais]
+# Mantendo do config_dados_FINAL.py
+
+LISTA_CONSELHOS = [
+    "OAB", "CRA", "CAU", "CRBIO", "CRBM", "CRC", "CRE", "CRECI", "COREN", 
+    "CONRE", "CREF", "CREFITO", "CRM", "CRMV", "CRN", "CRO", "CRF", "CRP", 
+    "CRESS", "CONFE", "CONFEA", "CREA", "CRQ", "CRT", "CORE", "CONRERP", 
+    "CRP", "CRTR", "CRFA", "CRMV", "Cofeci", "Cofen", "Cofito", "Confea", 
+    "Conferp", "Confere", "Conselho Federal de Medicina", 
+    "Ordem dos Advogados do Brasil"
+]
 
 # =====================================================
 # NORMALIZAÇÃO (anti ruído)
