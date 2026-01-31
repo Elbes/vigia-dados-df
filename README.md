@@ -6,7 +6,7 @@ O **VigiaDados DF** tem como objetivo apoiar a Administração Pública na **pro
 
 A solução atua como um **mecanismo preventivo**, auxiliando a triagem inicial de pedidos, **sem substituir a decisão humana**, garantindo **explicabilidade, auditabilidade e governança**.
 
-Link do vídeo de demonstração: https://youtu.be/pWZZ_9EpD7A
+Link do vídeo de demonstração: https://youtu.be/844-7J7oi60
 
 ---
 
