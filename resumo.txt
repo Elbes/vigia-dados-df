@@ -1,9 +1,0 @@
-O VigiaDados DF é uma solução tecnológica desenvolvida para apoiar a Administração Pública na proteção de dados pessoais e dados sensíveis no contexto dos pedidos de acesso à informação, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018).
-
-A proposta atua como um filtro preventivo automatizado, auxiliando a triagem inicial de pedidos recebidos por órgãos públicos, sinalizando aqueles que apresentam risco de exposição indevida de informações protegidas, sem substituir a decisão humana.
-
-A solução adota uma arquitetura determinística e explicável, baseada na combinação de regras explícitas (expressões regulares) e heurística linguística (Processamento de Linguagem Natural clássico), permitindo identificar dados pessoais e dados sensíveis de forma auditável, reproduzível e transparente.
-
-O sistema prioriza alta sensibilidade (recall), reduzindo falsos negativos, e fornece evidências textuais, origem da decisão e nível de confiança, garantindo governança, rastreabilidade e suporte à tomada de decisão por servidores públicos.
-
-O VigiaDados DF não utiliza modelos generativos nem aprendizado automático em produção, estando alinhado às boas práticas de IA Responsável no setor público, aos princípios da LGPD e às diretrizes de controle social e acesso à informação.
